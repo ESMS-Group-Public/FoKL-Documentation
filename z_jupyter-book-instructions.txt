@@ -1,8 +1,0 @@
-To build the book via anaconda, use Anaconda Prompt and navigate to the correct 
-directory where you cloned the repo locally.  From one folder up, run `jb build FoKL_Book` or `jb build FoKL_Book --all`.
-This will build the book and any changes. Next, push the changes to the main branch in GitHub.
-
-To push to GitHub Pages for public viewing, using the `ghp-import` library, run 
-`ghp-import -n -p -f _build/html` from the main branch of the root directory (different
-directory than the build, one more down).  This assumes that the `gh-pages` branch is already
-created.
