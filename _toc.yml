@@ -7,9 +7,9 @@ chapters:
 - file: Examples/Introduction
   sections:
   - file: Examples/Sigmoid Example
-# - file: FoKL Base Concepts/Introduction
-#   sections:
-#   - file: FoKL Base Concepts/OLS
+- file: FoKL Base Concepts/OLS using SVD
+  # sections:
+  # - file: FoKL Base Concepts/OLS
 #     MCMC random walk 
 #     OLS using SVD 
 #     Probability and Bayes Theorem
