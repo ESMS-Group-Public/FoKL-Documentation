@@ -1,68 +1,70 @@
 
+
 <!DOCTYPE html>
 
 
-<html lang="en" data-content_root="../" >
+<html lang="en" data-content_root="" >
 
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Ordinary Least Square using Singular Value Decomposition &#8212; My sample book</title>
+    <title>Ordinary Least Square (OLS) &#8212; My sample book</title>
   
   
   
   <script data-cfasync="false">
     document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=3ee479438cf8b5e0d341" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
-    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
-    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
-    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341" />
-  <script src="../_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=3ee479438cf8b5e0d341"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
 
-    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
-    <script src="../_static/doctools.js?v=9a2dae69"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
-    <script src="../_static/copybutton.js?v=f281be69"></script>
-    <script src="../_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js"></script>
     <script>let toggleHintShow = 'Click to show';</script>
     <script>let toggleHintHide = 'Click to hide';</script>
     <script>let toggleOpenOnPrint = 'true';</script>
-    <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
+    <script src="../_static/togglebutton.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
-    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
-    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
     <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'FoKL Base Concepts/OLS using SVD';</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="FoKL Base Concepts" href="Introduction.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -72,23 +74,27 @@
 
   
   
-  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
   
   <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
 
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-primary-sidebar-checkbox"/>
-  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
   
   <input type="checkbox"
           class="sidebar-toggle"
-          id="pst-secondary-sidebar-checkbox"/>
-  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
   
   <div class="search-button__wrapper">
     <div class="search-button__overlay"></div>
@@ -110,13 +116,8 @@
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <div class="pst-async-banner-revealer d-none">
-  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
-</div>
-
   
-    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
     </header>
   
 
@@ -124,8 +125,6 @@
     <div class="bd-container__inner bd-page-width">
       
       
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -180,11 +179,15 @@
                 </a>
             </li>
         </ul>
-        <ul class="nav bd-sidenav">
-<li class="toctree-l1 has-children"><a class="reference internal" href="../Examples/Introduction.html">FoKL Examples</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Examples/Introduction.html">FoKL Examples</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="../Examples/Sigmoid%20Example.html">Sigmoid Example</a></li>
 </ul>
-</details></li>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="Introduction.html">FoKL Base Concepts</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Ordinary Least Square (OLS)</a></li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -200,7 +203,7 @@
 
       </div>
       
-      <main id="main-content" class="bd-main" role="main">
+      <main id="main-content" class="bd-main">
         
         
 
@@ -209,14 +212,14 @@
           <div class="bd-content">
             <div class="bd-article-container">
               
-              <div class="bd-header-article d-print-none">
+              <div class="bd-header-article">
 <div class="header-article-items header-article__inner">
   
     <div class="header-article-items__start">
       
-        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
   <span class="fa-solid fa-bars"></span>
-</button></div>
+</label></div>
       
     </div>
   
@@ -357,9 +360,9 @@ document.write(`
   </button>
 `);
 </script>
-<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <span class="fa-solid fa-list"></span>
-</button>
+</label>
 </div></div>
       
     </div>
@@ -370,7 +373,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Ordinary Least Square using Singular Value Decomposition</h1>
+    <h1>Ordinary Least Square (OLS)</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -380,7 +383,6 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinary-least-square">Ordinary Least Square</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">Singular Value Decomposition</a></li>
 </ul>
             </nav>
@@ -393,56 +395,211 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="ordinary-least-square-using-singular-value-decomposition">
-<h1>Ordinary Least Square using Singular Value Decomposition<a class="headerlink" href="#ordinary-least-square-using-singular-value-decomposition" title="Link to this heading">#</a></h1>
-<section id="ordinary-least-square">
-<h2>Ordinary Least Square<a class="headerlink" href="#ordinary-least-square" title="Link to this heading">#</a></h2>
-<p>The goal of using OLS is to estimated the relationship between a dependent variable (response) and one or more independent variables (predictor)and also to find the linear relationship that best fits the observer data.</p>
-<p>Here <span class="math notranslate nohighlight">\(\beta\)</span> is the intercep and <span class="math notranslate nohighlight">\(\beta 1\)</span> and <span class="math notranslate nohighlight">\(\beta 2\)</span> are the coefficient for <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x^2\)</span>, respectively, and \epsilon represents the error term.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="ordinary-least-square-ols">
+<h1>Ordinary Least Square (OLS)<a class="headerlink" href="#ordinary-least-square-ols" title="Permalink to this heading">#</a></h1>
+<p>When creating mathematical models for predictions, one of the most common, yet useful methodologies is known as Ordinary Least Squares or OLS.  OLS is a method for building a model via linear regression, meaning it is fitting coefficients (<span class="math notranslate nohighlight">\(\beta\)</span> values in this case) to a model.</p>
+<p>The goal of using OLS is to estimated the relationship between an inputs (the dependent variable or response, represented by <span class="math notranslate nohighlight">\(x\)</span> in the equation below) and one or more outputs (the independent variable or predictor, represented by <span class="math notranslate nohighlight">\(y\)</span> in the equation below). Now, let’s take a look at an example to which OLS may apply to.</p>
 <div class="math notranslate nohighlight">
 \[
-y= \beta _0 + \beta _1x +\beta _2x^2 + \epsilon
+y= \beta _2 x^2 + \beta _1 x + \beta _0 + \epsilon
 \]</div>
-<p>The coefficients are estimated using the least square method, which minimize the sum of square residuals (difference between observed and predicted values). The formula below:
+<p>This equation can be represented on a 2D plot.  Here <span class="math notranslate nohighlight">\(\beta_0\)</span> is the intercept and <span class="math notranslate nohighlight">\(\beta_1\)</span> and <span class="math notranslate nohighlight">\(\beta_2\)</span> are the coefficient for <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(x^2\)</span>, respectively, and <span class="math notranslate nohighlight">\(\epsilon\)</span> represents the error term between the proposed model and the data.  Note that while we only have one input, <span class="math notranslate nohighlight">\(x\)</span>, we can manipulate it to account for non-linear relationships in the model.  Here we chose <span class="math notranslate nohighlight">\(x^2\)</span>.  However, we can choose whatever manipulations to <span class="math notranslate nohighlight">\(x\)</span> that we want (<span class="math notranslate nohighlight">\(ln(x)\)</span>, <span class="math notranslate nohighlight">\(\sqrt{x}\)</span>, etc) but this is largely problem dependant.  Our goal is to find the constant values of <span class="math notranslate nohighlight">\(\beta_0\)</span>, <span class="math notranslate nohighlight">\(\beta_1\)</span>, and <span class="math notranslate nohighlight">\(\beta_2\)</span> that minimize the error of our model.  Because there is a linear relationship between each <span class="math notranslate nohighlight">\(\beta\)</span> value and it’s relative term, this is known as a linear model.</p>
+<p>The coefficients are estimated using the least square method, which minimize the sum of square residuals (difference between observed and predicted values of <span class="math notranslate nohighlight">\(y\)</span>). While the derivation is outside the scope of this notebook, it can be easily found online <span id="id1">[<a class="reference internal" href="../markdown.html#id3">_or24</a>]</span>.  The final formula is shown below:
 $<span class="math notranslate nohighlight">\( 
 \beta = (X^T X)^{-1} X^T y
-\)</span><span class="math notranslate nohighlight">\(
-where \)</span>X<span class="math notranslate nohighlight">\( is the design matrix and \)</span>y$ is the vector of observed values</p>
-</section>
-<section id="singular-value-decomposition">
-<h2>Singular Value Decomposition<a class="headerlink" href="#singular-value-decomposition" title="Link to this heading">#</a></h2>
-<p>Singular Value Decomposition is a mathematic technique in linear algebra that facotrs a matrix into three other matrices. It is powerful tool for analyzing of matrices and has wide range of application</p>
-<p>Given any <span class="math notranslate nohighlight">\(m*n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>, SVD decomposed it intro three matrices:
-$<span class="math notranslate nohighlight">\( 
-A = U\sum V^T
 \)</span>$</p>
-<p>where:</p>
-<p><span class="math notranslate nohighlight">\(U\)</span>: An mxm orthogonal matrix whose columns are the left singular vector of A</p>
-<p><span class="math notranslate nohighlight">\(\sum\)</span>: An mxn diagonal matrix with non-negative real numbers on the diagonal, called singular values</p>
-<p><span class="math notranslate nohighlight">\(V\)</span>: An nxn orthogonal matrix whose columns are the singular vectors of <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(V^T\)</span> is the tranpose of <span class="math notranslate nohighlight">\(V\)</span></p>
+<p>where <span class="math notranslate nohighlight">\(X\)</span> is the design matrix of our inputs (columns for <span class="math notranslate nohighlight">\(x^2\)</span>, <span class="math notranslate nohighlight">\(x\)</span>, and constant in this example case) and <span class="math notranslate nohighlight">\(y\)</span> is the vector of observed values.  Below is a code implementation of this approach that can be used to solve for the <span class="math notranslate nohighlight">\(\beta\)</span> coefficients. Let’s start by generating some data and visualizing it.</p>
+<p>The goal is to find <span class="math notranslate nohighlight">\(\beta\)</span> such that the sum squared residuals is minimized. This can be formulated as:
+$<span class="math notranslate nohighlight">\(
+min_\beta ||y - X\beta||^2_2
+\)</span>$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import relevant libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="c1"># Set the random seed for reproducibility</span>
 <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 
-<span class="c1"># Generate data with added noise </span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1000</span><span class="p">)</span>
+<span class="c1"># Generate data with added noise (noise representing epsilon error)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="mi">3</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">5</span><span class="o">*</span><span class="n">x</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 
-<span class="c1"># Create a design matrix with columns [x^2, x, 1]</span>
-<span class="n">matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+<span class="c1"># Create Visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Sample data for &#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$y=3x^2+5x-4$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/34765f816d9c38fab8302120461f83c04d44e77462b9c444dbc60f84eeff3a0d.png" src="../_images/34765f816d9c38fab8302120461f83c04d44e77462b9c444dbc60f84eeff3a0d.png" />
+</div>
+</div>
+<p>Here, we can see that while the data has some randomness to it, there is a general shape to the curve. In this case, it is represented by our example, <span class="math notranslate nohighlight">\(y = 3x^2 + 5x - 4\)</span>.  Now, let’s use OLS to predict the <span class="math notranslate nohighlight">\(\beta\)</span> values.  To verify, we know we should get <span class="math notranslate nohighlight">\(\beta_2 \approx 3\)</span>, <span class="math notranslate nohighlight">\(\beta_1 \approx 5\)</span>, <span class="math notranslate nohighlight">\(\beta_0 \approx -4\)</span>. However, because we added noise to the data, these values will not be exact.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a design matrix of our inputs with columns [x^2, x, 1]</span>
+<span class="n">input_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Solve for the coefficients using OLS</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">input_matrix</span><span class="o">.</span><span class="n">T</span><span class="nd">@input_matrix</span><span class="p">)</span><span class="nd">@input_matrix</span><span class="o">.</span><span class="n">T</span><span class="nd">@y</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The beta values are:&#39;</span><span class="p">,</span> <span class="n">betas</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s create predictions of our model for visualization purposes</span>
+<span class="n">y_model</span> <span class="o">=</span> <span class="n">betas</span><span class="nd">@input_matrix</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Create visualization with line representing the fit.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_model</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model Prediction with Basis Functions &#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$x^2, x, constant$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The beta values are: [ 2.91137882  5.28859742 -3.74100392]
+</pre></div>
+</div>
+<img alt="../_images/984115bbc6d75b1088017cc50fbbb79b6a315be036ec1f780f8e4662adf8eb4d.png" src="../_images/984115bbc6d75b1088017cc50fbbb79b6a315be036ec1f780f8e4662adf8eb4d.png" />
+</div>
+</div>
+<p>It can be seen that this is a very powerful tool for making predictions! However, note that this technique is only as good as the design matrix you create.  For example, let’s instead create a model that replaces <span class="math notranslate nohighlight">\(x^2\)</span> with <span class="math notranslate nohighlight">\(\sqrt(x)\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a design matrix of our inputs with columns [ln(x), x, 1]</span>
+<span class="n">input_matrix_bad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Solve for the coefficients using OLS</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">input_matrix_bad</span><span class="o">.</span><span class="n">T</span><span class="nd">@input_matrix_bad</span><span class="p">)</span><span class="nd">@input_matrix_bad</span><span class="o">.</span><span class="n">T</span><span class="nd">@y</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The beta values are:&#39;</span><span class="p">,</span> <span class="n">betas</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s create predictions of our model for visualization purposes</span>
+<span class="n">y_model_bad</span> <span class="o">=</span> <span class="n">betas</span><span class="nd">@input_matrix_bad</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Create visualization with line representing the fit.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_model_bad</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model Prediction with Basis Functions &#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$\sqrt</span><span class="si">{x}</span><span class="s1">, x, constant$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The beta values are: [-43.041262    35.38053311   9.39519628]
+</pre></div>
+</div>
+<img alt="../_images/44df0c8b18f6290e8735088c450b351ae700e132c7e4a3d37508ff4c38914cd4.png" src="../_images/44df0c8b18f6290e8735088c450b351ae700e132c7e4a3d37508ff4c38914cd4.png" />
+</div>
+</div>
+<p>Here we can see that without the <span class="math notranslate nohighlight">\(x^2\)</span> term, the model fit runs into issues.  Specifically, near 0, there is a large curve upwards.  Additionally, the parabolic shape is lost at higher values of x and is represented more linearly. To get a more analytical representation of if the transformations of x are bad, we can calculated the sum squared error outright for each and compare.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sum_squared_error</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_model</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">sum_squared_error_bad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_model_bad</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SSE for model with Basis Functions x^2, x, constant&#39;</span><span class="p">,</span> <span class="n">sum_squared_error</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SSE for model with Basis Functions sqrt(x), x, constant&#39;</span><span class="p">,</span> <span class="n">sum_squared_error_bad</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SSE for model with Basis Functions x^2, x, constant 833.7374009436863
+SSE for model with Basis Functions sqrt(x), x, constant 1422.6957717728453
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, we can see that the sum squared error is much higher for the model using the <span class="math notranslate nohighlight">\(\sqrt{x}\)</span> basis function.  This means that the selection of <span class="math notranslate nohighlight">\(x^2\)</span> is better.  However, this now begs the question, what about if we combined the two models and used one that has all the terms previously used in it?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a design matrix of our inputs with columns [x^2, sqrt(x), x, 1]</span>
+<span class="n">input_matrix_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Solve for the coefficients using OLS</span>
+<span class="n">betas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">input_matrix_all</span><span class="o">.</span><span class="n">T</span><span class="nd">@input_matrix_all</span><span class="p">)</span><span class="nd">@input_matrix_all</span><span class="o">.</span><span class="n">T</span><span class="nd">@y</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The beta values are:&#39;</span><span class="p">,</span> <span class="n">betas</span><span class="p">)</span>
+
+<span class="c1"># Let&#39;s create predictions of our model for visualization purposes</span>
+<span class="n">y_model_all</span> <span class="o">=</span> <span class="n">betas</span><span class="nd">@input_matrix_all</span><span class="o">.</span><span class="n">T</span>
+
+<span class="c1"># Create visualization with line representing the fit.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_model_all</span><span class="p">,</span><span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model Prediction with Basis Functions &#39;</span> <span class="o">+</span> <span class="sa">r</span><span class="s1">&#39;$x^2, \sqrt</span><span class="si">{x}</span><span class="s1">, x, constant$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Calculate SSE</span>
+<span class="n">sum_squared_error_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span><span class="o">-</span><span class="n">y_model_all</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SSE for model with Basis Functions x^2, sqrt(x), x, constant&#39;</span><span class="p">,</span> <span class="n">sum_squared_error_all</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The beta values are: [ 2.69137275 -4.11640242  7.8743761  -2.24366208]
+</pre></div>
+</div>
+<img alt="../_images/3989ec7e090b890cc75abdab022c44738fa4080567ae423c6a22010e4a686400.png" src="../_images/3989ec7e090b890cc75abdab022c44738fa4080567ae423c6a22010e4a686400.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>SSE for model with Basis Functions x^2, sqrt(x), x, constant 828.6016155582963
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, we can see that the sum squared error is the lowest out of any of the models! However, because we generated the data, we know that a model without the <span class="math notranslate nohighlight">\(\sqrt{x}\)</span> term should be able to account for all of the input dependencies of the output <span class="math notranslate nohighlight">\(y\)</span>.  This is what is known as overfitting.  The more terms we add to the model, the lower the sum squared error will become.  However, this may not make the model generalizable, or be able to make predictions to new data.  Therefore, it is up to the person creating the model to determine what terms need to be included in the model to balance the accuracy of the model with the possibility of overfitting (aka: bias vs. variance tradeoff more formally).</p>
+<section id="singular-value-decomposition">
+<h2>Singular Value Decomposition<a class="headerlink" href="#singular-value-decomposition" title="Permalink to this heading">#</a></h2>
+<p>Singular Value Decomposition is a mathematic technique in linear algebra that factors a matrix into three other matrices. It is powerful tool for analyzing of matrices and has wide range of application.</p>
+<p>For example, SVD is use data compression where is compress imagess by reducing the number of singular values, retaining most significant features while discarding the less important ones. Or in machine learning, it can be used to regularize models, preventing overfitting by simplifying the model parameters.</p>
+<p>Given any <span class="math notranslate nohighlight">\(m*n\)</span> matrix <span class="math notranslate nohighlight">\(A\)</span>, SVD decomposed it intro three matrices:</p>
+<div class="math notranslate nohighlight">
+\[ 
+A = U\sigma V^T
+\]</div>
+<p>where:</p>
+<p><span class="math notranslate nohighlight">\(U\)</span>: An mxm orthogonal matrix whose columns are the left singular vector of A</p>
+<p><span class="math notranslate nohighlight">\(\sigma\)</span>: An mxn diagonal matrix with non-negative real numbers on the diagonal, called singular values</p>
+<p><span class="math notranslate nohighlight">\(V\)</span>: An nxn orthogonal matrix whose columns are the singular vectors of <span class="math notranslate nohighlight">\(A\)</span>, and <span class="math notranslate nohighlight">\(V^T\)</span> is the transpose of <span class="math notranslate nohighlight">\(V\)</span></p>
+<p>Directly compute <span class="math notranslate nohighlight">\((X^TX)^{-1}\)</span> can be numerically unstable or impossible. This is where SVD comes into play below</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a design matrix of our inputs with columns [x^2, x, 1]</span>
+<span class="n">input_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
 
 <span class="c1"># Perform Singular Value Decomposition (SVD) on the design matrix</span>
-<span class="n">U</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">full_matrices</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-
-<span class="c1"># Inverse of singular values</span>
-<span class="n">d_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">d</span><span class="p">)</span>
+<span class="n">U</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">input_matrix</span><span class="p">,</span> <span class="n">full_matrices</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using SVD, the inverse <span class="math notranslate nohighlight">\(X\)</span> can be computed as:
+$<span class="math notranslate nohighlight">\( 
+X^{-1} = V\sigma^{-1}U^T
+\)</span>$</p>
+<p>where <span class="math notranslate nohighlight">\(\sigma\)</span> is the inverse of <span class="math notranslate nohighlight">\(\sigma\)</span>. Finally the coefficient vector <span class="math notranslate nohighlight">\(\beta\)</span> can be computed as:</p>
+<div class="math notranslate nohighlight">
+\[
+\beta = X^{-1} y = V\sigma^{-1}U^Ty
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Inverse of singular values</span>
+<span class="n">S_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">S</span><span class="p">)</span>
 <span class="n">y_col</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
 
 <span class="c1"># Compute coefficients</span>
-<span class="n">beta</span> <span class="o">=</span> <span class="n">VT</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">d_inv</span> <span class="o">@</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y_col</span>
+<span class="n">beta</span> <span class="o">=</span> <span class="n">V</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">S_inv</span> <span class="o">@</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">y_col</span>
 <span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
@@ -450,76 +607,29 @@ A = U\sum V^T
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 3.00184393  4.87022044 -3.7345948 ]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[ 2.91137882  5.28859742 -3.74100392]
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> 
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Real data </span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">,</span><span class="mf">8.7</span><span class="p">,</span><span class="mf">21.8</span><span class="p">,</span><span class="mf">41.6</span><span class="p">,</span><span class="mf">72.97</span><span class="p">])</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mf">77.92</span><span class="p">,</span> <span class="mf">153.9</span><span class="p">,</span> <span class="mf">217.9</span><span class="p">,</span> <span class="mf">271.1</span><span class="p">,</span> <span class="mf">296.64</span><span class="p">])</span>
-
-<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))])</span><span class="o">.</span><span class="n">T</span>
-
-<span class="c1"># Compute SVD of X</span>
-<span class="n">U</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">VT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">full_matrices</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
-
-<span class="c1"># Compute the pseudo-inverse using SVD components</span>
-<span class="n">d_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">d</span><span class="p">)</span>
-<span class="n">X_pseudo_inv</span> <span class="o">=</span> <span class="n">VT</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">d_inv</span> <span class="o">@</span> <span class="n">U</span><span class="o">.</span><span class="n">T</span>
-
-<span class="c1"># Compute the coefficients</span>
-<span class="n">y_col</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
-<span class="n">beta</span> <span class="o">=</span> <span class="n">X_pseudo_inv</span> <span class="o">@</span> <span class="n">y_col</span>
-<span class="n">beta</span> <span class="o">=</span> <span class="n">beta</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">beta</span><span class="p">)</span>
-<span class="n">intercept</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-<span class="n">linear</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">quadratic</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Intercept: </span><span class="si">{</span><span class="n">intercept</span><span class="si">}</span><span class="s2">, Linear coefficient: </span><span class="si">{</span><span class="n">linear</span><span class="si">}</span><span class="s2">, Quadratic coefficient: </span><span class="si">{</span><span class="n">quadratic</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">beta</span>
-
-<span class="n">Y</span> <span class="o">=</span> <span class="n">beta</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="n">beta</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">beta</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> 
-<span class="c1"># Plot the original data and the fitted polynomial curve</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
-<span class="c1"># plt.plot(x, y_pred, color=&#39;red&#39;, linewidth=2, label=&#39;Fitted Polynomial&#39;)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Polynomial Regression Using SVD&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-
-<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Fitted Polynomial&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred_svd</span> <span class="o">=</span> <span class="n">input_matrix</span> <span class="o">@</span> <span class="n">beta</span>
+<span class="n">ssr_svd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_pred_svd</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum of Squared Residuals (SVD):&quot;</span><span class="p">,</span> <span class="n">ssr_svd</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SSE for model with Basis Functions x^2, x, constant&#39;</span><span class="p">,</span> <span class="n">sum_squared_error</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[-0.08601457  9.70707182 39.80575357]
-Intercept: 39.80575357295505, Linear coefficient: 9.707071824716863, Quadratic coefficient: -0.0860145701135771
-</pre></div>
-</div>
-<img alt="../_images/d9c0aaa83e5bcfdee3d24d8f8c95315f778226510d3d11105ef12609c3dd1dc3.png" src="../_images/d9c0aaa83e5bcfdee3d24d8f8c95315f778226510d3d11105ef12609c3dd1dc3.png" />
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x13eb39dd6d0&gt;]
-</pre></div>
-</div>
-<img alt="../_images/302c098287775342cc7502f0b44e092c68bad19b76702632ee7ea73421f23194.png" src="../_images/302c098287775342cc7502f0b44e092c68bad19b76702632ee7ea73421f23194.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">FoKL</span> <span class="kn">import</span> <span class="n">FoKLRoutines</span>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sum of Squared Residuals (SVD): 833.7374009436863
+SSE for model with Basis Functions x^2, x, constant 833.7374009436863
 </pre></div>
 </div>
 </div>
 </div>
+<p>From the result, we can see that is the same. But when the matrix X is ill-conditioned or not full of rank. By computing direct can cause a large errors in the coefficients due to small numerical inaccuracies. It can be show here <span id="id2">[<a class="reference internal" href="../markdown.html#id4">ill</a>]</span></p>
+<p>In contrast, SVD provides a more stable way to compute the coefficients, even when <span class="math notranslate nohighlight">\(X\)</span> has such issues</p>
 </section>
 </section>
 
@@ -550,9 +660,18 @@ Intercept: 39.80575357295505, Linear coefficient: 9.707071824716863, Quadratic c
               
               
               
-                <footer class="prev-next-footer d-print-none">
+                <footer class="prev-next-footer">
                   
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="Introduction.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">FoKL Base Concepts</p>
+      </div>
+    </a>
 </div>
                 </footer>
               
@@ -569,7 +688,6 @@ Intercept: 39.80575357295505, Linear coefficient: 9.707071824716863, Quadratic c
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ordinary-least-square">Ordinary Least Square</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#singular-value-decomposition">Singular Value Decomposition</a></li>
 </ul>
   </nav></div>
@@ -619,8 +737,8 @@ By The Jupyter Book Community
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=3ee479438cf8b5e0d341"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=3ee479438cf8b5e0d341"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
 
   <footer class="bd-footer">
   </footer>
