@@ -423,22 +423,26 @@ document.write(`
 <img alt="../_images/dfbd9b41366ae4765d1b0a15a34a6c325618e770b2620a0c45335801b6ff99eb.png" src="../_images/dfbd9b41366ae4765d1b0a15a34a6c325618e770b2620a0c45335801b6ff99eb.png" />
 </div>
 </div>
-<p>The formula below is integral to the likelihood calculation when fitting a model to data using the Metropolis-Hastings algorithm. This formula is derived from fundamental principles of probability and statistics, specifically Bayesian inference and the properties of the normal distribution.
-$<span class="math notranslate nohighlight">\(
+<p>The formula below is integral to the likelihood calculation when fitting a model to data using the Metropolis-Hastings algorithm. This formula is derived from fundamental principles of probability and statistics, specifically Bayesian inference and the properties of the normal distribution.</p>
+<div class="math notranslate nohighlight">
+\[
 normal PDF(y,\mu,\sigma) = \frac{1}{\sigma\sqrt{2\pi}}exp(-\frac{(y-\sigma)^2}{2\sigma^2})
-\)</span><span class="math notranslate nohighlight">\(
-In the context of Bayesian inference, the likelihood of observing the data is given the model parameters is calculated. For normally distributed errors, the log-likelihood for a set of observations \)</span>(x_i,y_i)<span class="math notranslate nohighlight">\(, converting the product into sum is: 
-\)</span><span class="math notranslate nohighlight">\( 
+\]</div>
+<p>In the context of Bayesian inference, the likelihood of observing the data is given the model parameters is calculated. For normally distributed errors, the log-likelihood for a set of observations <span class="math notranslate nohighlight">\((x_i,y_i)\)</span>, converting the product into sum is:</p>
+<div class="math notranslate nohighlight">
+\[ 
 logL(a,b,c) = \sum^{n}_{i=1} log(\frac{1} {\sigma\sqrt{2\pi}}  exp( -\frac{(y_i - f(x_i; a,b,c))^2}{2\sigma^2}))
-\)</span>$</p>
-<p>This simplifies into:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>This simplifies into:</p>
+<div class="math notranslate nohighlight">
+\[
 logL(a,b,c) = -nlog(\sigma \sqrt{2\pi}) - \frac{1}{2\sigma^2} \sum^{n}_{i=1} (y_i - f(x_i; a,b,c))^2
-\)</span>$</p>
-<p>Since <span class="math notranslate nohighlight">\(-nlog(\sigma \sqrt{2\pi})\)</span> is constant, it can be ignored for comparison purposes, leading to:
-$<span class="math notranslate nohighlight">\(
+\]</div>
+<p>Since <span class="math notranslate nohighlight">\(-nlog(\sigma \sqrt{2\pi})\)</span> is constant, it can be ignored for comparison purposes, leading to:</p>
+<div class="math notranslate nohighlight">
+\[
 logL(a,b,c) \propto - \frac{1}{2\sigma^2} \sum^{n}_{i=1} (y_i - f(x_i; a,b,c))^2
-\)</span>$</p>
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initial values (can be random or zeros)</span>
