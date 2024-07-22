@@ -1,42 +1,23 @@
 Traceback (most recent call last):
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\nbclient\client.py", line 778, in _async_poll_for_reply
-    msg = await ensure_async(self.kc.shell_channel.get_msg(timeout=new_timeout))
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\jupyter_core\utils\__init__.py", line 189, in ensure_async
-    result = await obj
-             ^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\jupyter_client\channels.py", line 315, in get_msg
-    raise Empty
-_queue.Empty
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
+  File "C:\Users\ntk00\anaconda3\Lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\nbclient\client.py", line 1305, in execute
+  File "C:\Users\ntk00\anaconda3\Lib\site-packages\nbclient\client.py", line 1305, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\jupyter_core\utils\__init__.py", line 173, in wrapped
+  File "C:\Users\ntk00\anaconda3\Lib\site-packages\jupyter_core\utils\__init__.py", line 173, in wrapped
     return loop.run_until_complete(inner)
            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\asyncio\base_events.py", line 654, in run_until_complete
+  File "C:\Users\ntk00\anaconda3\Lib\asyncio\base_events.py", line 653, in run_until_complete
     return future.result()
            ^^^^^^^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\nbclient\client.py", line 705, in async_execute
+  File "C:\Users\ntk00\anaconda3\Lib\site-packages\nbclient\client.py", line 705, in async_execute
     await self.async_execute_cell(
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\nbclient\client.py", line 1001, in async_execute_cell
-    exec_reply = await self.task_poll_for_reply
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\nbclient\client.py", line 802, in _async_poll_for_reply
-    error_on_timeout_execute_reply = await self._async_handle_timeout(timeout, cell)
-                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "c:\Users\micha\anaconda3\envs\FoKL_Book\Lib\site-packages\nbclient\client.py", line 852, in _async_handle_timeout
-    raise CellTimeoutError.error_from_timeout_and_cell(
-nbclient.exceptions.CellTimeoutError: A cell timed out while it was being executed, after 30 seconds.
-The message was: Cell execution timed out.
-Here is a preview of the cell contents:
--------------------
+  File "C:\Users\ntk00\anaconda3\Lib\site-packages\nbclient\client.py", line 1058, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "C:\Users\ntk00\anaconda3\Lib\site-packages\nbclient\client.py", line 914, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
 from FoKL import FoKLRoutines
 # Initializing FoKL model with some user-defined hyperparameters (leaving others blank for default values) and
 # turning off user-warnings (i.e., warnings from FoKL) since working example requires no troubleshooting:
@@ -47,5 +28,16 @@ print("\nCurrently training model...\n")
 a, b, ev = model.fit(df[['X','Y']], df[['Z']], clean=True)
 
 print("\nTraining Complete!")
--------------------
+------------------
+
+
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[2], line 1[0m
+[1;32m----> 1[0m [38;5;28;01mfrom[39;00m [38;5;21;01mFoKL[39;00m [38;5;28;01mimport[39;00m FoKLRoutines
+[0;32m      2[0m [38;5;66;03m# Initializing FoKL model with some user-defined hyperparameters (leaving others blank for default values) and[39;00m
+[0;32m      3[0m [38;5;66;03m# turning off user-warnings (i.e., warnings from FoKL) since working example requires no troubleshooting:[39;00m
+[0;32m      4[0m model [38;5;241m=[39m FoKLRoutines[38;5;241m.[39mFoKL()
+
+[1;31mModuleNotFoundError[0m: No module named 'FoKL'
 
